@@ -295,16 +295,16 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue.shade50,
       appBar: AppBar(
         title: const Text('Voice Reminder'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Colors.blue,
         bottom: TabBar(
           controller: _tabController,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.white70,
+          indicatorColor: Colors.white,
           tabs: [
-         /*   Tab(
-              icon: const Icon(Icons.mic),
-              text: 'Recordings (${_recordings.length})',
-            ),*/
             Tab(
               icon: const Icon(Icons.alarm),
               text: 'Reminders (${_reminders.length})',
@@ -312,18 +312,20 @@ class _DashboardScreenState extends State<DashboardScreen>
           ],
         ),
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : TabBarView(
-              controller: _tabController,
-              children: [
-               // _buildRecordingsList(),
-                _buildRemindersList(),
-              ],
-            ),
+      body: Container(
+        color: Colors.blue.shade50,
+        child: _isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : TabBarView(
+                controller: _tabController,
+                children: [
+                  _buildRemindersList(),
+                ],
+              ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddOptions,
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         child: const Icon(Icons.add),
       ),

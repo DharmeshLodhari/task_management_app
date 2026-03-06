@@ -21,7 +21,7 @@
          Without this, AlarmScreen silently fails to open from background. -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <application
-        android:label="Reminder App"
+        android:label="AudioTask Reminder"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

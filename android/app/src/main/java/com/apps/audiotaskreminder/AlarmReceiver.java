@@ -1,4 +1,4 @@
-package com.example.task_reminder_app;
+package com.apps.audiotaskreminder;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -31,7 +31,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     public static final String EXTRA_REMINDER_ID = "reminder_id";
     public static final String EXTRA_NOTIF_ID    = "notif_id";
-    public static final String ACTION_ALARM      = "com.example.task_reminder_app.ALARM";
+    public static final String ACTION_ALARM      = "com.apps.audiotaskreminder.ALARM";
 
     private static final String CHANNEL_ID   = "task_reminder_alarm";
     private static final String CHANNEL_NAME = "Alarms";

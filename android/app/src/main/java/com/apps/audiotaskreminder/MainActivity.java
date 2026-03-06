@@ -1,4 +1,4 @@
-package com.example.task_reminder_app;
+package com.apps.audiotaskreminder;
 
 import android.app.AlarmManager;
 import android.app.NotificationManager;

@@ -41,7 +41,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 1, vsync: this);
     _loadAll();
     _player.onPlayerComplete.listen((_) {
       if (mounted) setState(() => _playingId = null);

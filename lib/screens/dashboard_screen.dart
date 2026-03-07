@@ -454,74 +454,136 @@ class _DashboardScreenState extends State<DashboardScreen>
     final summary = _buildUpcomingSummaryCard();
     final items = _reminders;
 
-    return ListView.separated(
-      padding: const EdgeInsets.all(16),
-      itemCount: items.length + (summary == null ? 0 : 1),
-      separatorBuilder: (_, __) => const SizedBox(height: 8),
-      itemBuilder: (context, index) {
-        if (summary != null && index == 0) {
-          return summary;
-        }
-        final remIndex = summary != null ? index - 1 : index;
-        final rem = items[remIndex];
-        final isPast = rem.reminderTime.isBefore(DateTime.now());
-        return Card(
-          elevation: 2,
-          child: ListTile(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            leading: CircleAvatar(
-              backgroundColor:
-                  isPast ? Colors.grey.shade200 : const Color(0xFF000080).withOpacity(0.1),
-              child: Icon(
-                isPast ? Icons.alarm_off : Icons.alarm,
-                color: isPast ? Colors.grey : const Color(0xFF000080),
-              ),
-            ),
-            title: Text(
-              rem.taskText,
-              style: TextStyle(
-                decoration: isPast ? TextDecoration.lineThrough : null,
-                color: isPast ? Colors.grey : null,
-              ),
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 2),
-                Row(
-                  children: [
-                    Icon(Icons.schedule,
-                        size: 13,
-                        color: isPast ? Colors.grey : const Color(0xFF000080)),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${_formatTime(rem.reminderTime)} · ${_formatDate(rem.createdAt)}',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: isPast ? Colors.grey : const Color(0xFF000080),
-                      ),
-                    ),
-                  ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final crossAxisCount = width >= 900
+            ? 3
+            : width >= 600
+                ? 2
+                : 2;
+
+        return CustomScrollView(
+          slivers: [
+            if (summary != null)
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                  child: summary,
                 ),
-                if (rem.originalText.isNotEmpty) ...[
-                  const SizedBox(height: 2),
-                  Text(
-                    '"${rem.originalText}"',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style:
-                        const TextStyle(fontSize: 11, color: Colors.grey),
-                  ),
-                ],
-              ],
+              ),
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+              sliver: SliverGrid(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: crossAxisCount,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  childAspectRatio: 1.3,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    final rem = items[index];
+                    final isPast = rem.reminderTime.isBefore(DateTime.now());
+                    return Card(
+                      elevation: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 16,
+                                  backgroundColor: isPast
+                                      ? Colors.grey.shade200
+                                      : const Color(0xFF000080)
+                                          .withOpacity(0.1),
+                                  child: Icon(
+                                    isPast
+                                        ? Icons.alarm_off
+                                        : Icons.alarm,
+                                    size: 18,
+                                    color: isPast
+                                        ? Colors.grey
+                                        : const Color(0xFF000080),
+                                  ),
+                                ),
+                                const Spacer(),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.delete_outline,
+                                    size: 18,
+                                  ),
+                                  color: Colors.grey,
+                                  onPressed: () => _deleteReminder(rem),
+                                  padding: EdgeInsets.zero,
+                                  constraints: const BoxConstraints(),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              rem.taskText,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                decoration: isPast
+                                    ? TextDecoration.lineThrough
+                                    : null,
+                                color: isPast ? Colors.grey : null,
+                              ),
+                            ),
+                            const Spacer(),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.schedule,
+                                  size: 13,
+                                  color: isPast
+                                      ? Colors.grey
+                                      : const Color(0xFF000080),
+                                ),
+                                const SizedBox(width: 4),
+                                Expanded(
+                                  child: Text(
+                                    '${_formatTime(rem.reminderTime)} · ${_formatDate(rem.createdAt)}',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: isPast
+                                          ? Colors.grey
+                                          : const Color(0xFF000080),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            if (rem.originalText.isNotEmpty) ...[
+                              const SizedBox(height: 4),
+                              Text(
+                                '"${rem.originalText}"',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  childCount: items.length,
+                ),
+              ),
             ),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete_outline),
-              color: Colors.grey,
-              onPressed: () => _deleteReminder(rem),
-            ),
-          ),
+          ],
         );
       },
     );

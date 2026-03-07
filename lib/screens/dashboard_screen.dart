@@ -24,12 +24,11 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen>
-    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+    with WidgetsBindingObserver {
   final _storage = StorageService();
   final _reminderStorage = ReminderStorageService();
   final _player = AudioPlayer();
 
-  late final TabController _tabController;
   Timer? _foregroundAlarmTimer;
 
   List<Recording> _recordings = [];
@@ -41,7 +40,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _tabController = TabController(length: 1, vsync: this);
     _loadAll();
     _player.onPlayerComplete.listen((_) {
       if (mounted) setState(() => _playingId = null);
@@ -65,7 +63,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _foregroundAlarmTimer?.cancel();
-    _tabController.dispose();
     _player.dispose();
     super.dispose();
   }
@@ -241,18 +238,6 @@ class _DashboardScreenState extends State<DashboardScreen>
             const SizedBox(height: 16),
             ListTile(
               leading: const CircleAvatar(
-                backgroundColor: Colors.indigo,
-                child: Icon(Icons.mic, color: Colors.white),
-              ),
-              title: const Text('Record Audio'),
-              subtitle: const Text('Save a voice recording'),
-              onTap: () {
-                Navigator.pop(ctx);
-                _goToScreen(const RecorderScreen());
-              },
-            ),
-            ListTile(
-              leading: const CircleAvatar(
                 backgroundColor: Colors.teal,
                 child: Icon(Icons.alarm_add, color: Colors.white),
               ),
@@ -299,29 +284,12 @@ class _DashboardScreenState extends State<DashboardScreen>
       appBar: AppBar(
         title: const Text('Voice Reminder'),
         backgroundColor: Colors.blue,
-        bottom: TabBar(
-          controller: _tabController,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white70,
-          indicatorColor: Colors.white,
-          tabs: [
-            Tab(
-              icon: const Icon(Icons.alarm),
-              text: 'Reminders (${_reminders.length})',
-            ),
-          ],
-        ),
       ),
       body: Container(
         color: Colors.blue.shade50,
         child: _isLoading
             ? const Center(child: CircularProgressIndicator())
-            : TabBarView(
-                controller: _tabController,
-                children: [
-                  _buildRemindersList(),
-                ],
-              ),
+            : _buildRemindersList(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddOptions,

@@ -347,6 +347,102 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 
+  Widget? _buildUpcomingSummaryCard() {
+    final now = DateTime.now();
+    final upcoming = _reminders
+        .where((r) => r.reminderTime.isAfter(now))
+        .toList()
+      ..sort((a, b) => a.reminderTime.compareTo(b.reminderTime));
+    if (upcoming.isEmpty) return null;
+
+    final today = DateTime(now.year, now.month, now.day);
+    final todayEnd = today.add(const Duration(days: 1));
+    final todayReminders = upcoming
+        .where((r) => r.reminderTime.isBefore(todayEnd))
+        .take(3)
+        .toList();
+
+    final next = upcoming.first;
+    final isSoon = next.reminderTime.difference(now) <=
+        const Duration(minutes: 60);
+
+    return Card(
+      elevation: 1,
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.upcoming, size: 18),
+                const SizedBox(width: 6),
+                const Text(
+                  'Upcoming reminders',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+                const Spacer(),
+                if (isSoon)
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF000080).withOpacity(0.08),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Text(
+                      'Soon',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF000080),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              _formatTime(next.reminderTime),
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              next.taskText,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 13),
+            ),
+            if (todayReminders.length > 1) ...[
+              const SizedBox(height: 8),
+              for (final r in todayReminders.skip(1))
+                Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.circle, size: 6),
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          '${_formatTime(r.reminderTime)} · ${r.taskText}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildRemindersList() {
     if (_reminders.isEmpty) {
       return const _EmptyState(
@@ -355,12 +451,19 @@ class _DashboardScreenState extends State<DashboardScreen>
         hint: 'Tap + to record a task reminder',
       );
     }
+    final summary = _buildUpcomingSummaryCard();
+    final items = _reminders;
+
     return ListView.separated(
       padding: const EdgeInsets.all(16),
-      itemCount: _reminders.length,
+      itemCount: items.length + (summary == null ? 0 : 1),
       separatorBuilder: (_, __) => const SizedBox(height: 8),
       itemBuilder: (context, index) {
-        final rem = _reminders[index];
+        if (summary != null && index == 0) {
+          return summary;
+        }
+        final remIndex = summary != null ? index - 1 : index;
+        final rem = items[remIndex];
         final isPast = rem.reminderTime.isBefore(DateTime.now());
         return Card(
           elevation: 2,

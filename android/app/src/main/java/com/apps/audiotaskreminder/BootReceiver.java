@@ -7,11 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-import java.util.Set;
 import java.util.TimeZone;
 
 /**
@@ -36,15 +36,26 @@ public class BootReceiver extends BroadcastReceiver {
         SharedPreferences prefs = context.getSharedPreferences(
                 "FlutterSharedPreferences", Context.MODE_PRIVATE);
 
-        // The plugin prefixes every key with "flutter."
-        // List<String> is stored as a StringSet.
-        Set<String> rawSet = prefs.getStringSet("flutter.task_reminders", null);
-        if (rawSet == null || rawSet.isEmpty()) return;
+        // shared_preferences_android >=2.0 stores List<String> as a JSON-encoded
+        // String (not a StringSet), e.g. "[\"...\",\"...\"]".
+        // The plugin prefixes every key with "flutter.".
+        String raw = prefs.getString("flutter.task_reminders", null);
+        if (raw == null || raw.isEmpty()) return;
+
+        JSONArray rawArray;
+        try {
+            rawArray = new JSONArray(raw);
+        } catch (Exception e) {
+            return;
+        }
+        if (rawArray.length() == 0) return;
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         long now = System.currentTimeMillis();
 
-        for (String json : rawSet) {
+        for (int i = 0; i < rawArray.length(); i++) {
+            String json = rawArray.optString(i, null);
+            if (json == null) continue;
             try {
                 JSONObject obj       = new JSONObject(json);
                 String reminderId    = obj.getString("id");

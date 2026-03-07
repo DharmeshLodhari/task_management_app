@@ -281,7 +281,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Voice Reminder'),
+        title: const Text('Task Reminder'),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())

@@ -103,7 +103,6 @@ class _ManualReminderScreenState extends State<ManualReminderScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Set Manual Reminder'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -149,20 +148,20 @@ class _ManualReminderScreenState extends State<ManualReminderScreen> {
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: timeSelected
-                        ? Colors.deepPurple
+                        ? const Color(0xFF000080)
                         : Colors.grey.shade400,
                     width: timeSelected ? 1.5 : 1,
                   ),
                   borderRadius: BorderRadius.circular(10),
                   color: timeSelected
-                      ? Colors.deepPurple.withOpacity(0.05)
+                      ? const Color(0xFF000080).withOpacity(0.05)
                       : null,
                 ),
                 child: Row(
                   children: [
                     Icon(
                       Icons.access_time_rounded,
-                      color: timeSelected ? Colors.deepPurple : Colors.grey,
+                      color: timeSelected ? const Color(0xFF000080) : Colors.grey,
                     ),
                     const SizedBox(width: 12),
                     Text(
@@ -172,7 +171,7 @@ class _ManualReminderScreenState extends State<ManualReminderScreen> {
                       style: TextStyle(
                         fontSize: 16,
                         color: timeSelected
-                            ? Colors.deepPurple
+                            ? const Color(0xFF000080)
                             : Colors.grey,
                         fontWeight: timeSelected
                             ? FontWeight.w600
@@ -191,7 +190,7 @@ class _ManualReminderScreenState extends State<ManualReminderScreen> {
               icon: const Icon(Icons.alarm_add),
               label: const Text('Set Reminder'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
+                backgroundColor: const Color(0xFF000080),
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 textStyle: const TextStyle(fontSize: 15),

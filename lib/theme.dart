@@ -1,69 +1,68 @@
 import 'package:flutter/material.dart';
 
-/// Warm / earthy design tokens for the app theme.
+/// Navy + white design tokens for the app theme.
 class AppColors {
   AppColors._();
 
-  // Palette
-  static const terracotta = Color(0xFFC4622D); // primary
-  static const sandstone = Color(0xFFE8956D); // primary-light
-  static const burntSienna = Color(0xFF8B3A1A); // primary-dark
+  static const navy     = Color(0xFF000080); // primary
+  static const navyLight = Color(0xFF0000B3); // primary-light
+  static const navyDark  = Color(0xFF00004D); // primary-dark
 
-  static const surface1 = Color(0xFFFAF4EC); // app background
-  static const surface2 = Color(0xFFF0E6D3); // cards, sheets
-  static const surface3 = Color(0xFFD9C9B0); // dividers, borders
+  static const background = Colors.white;
+  static const surface    = Color(0xFFF2F2F2); // cards, sheets
+  static const divider    = Color(0xFFDDDDDD); // borders
 
-  static const espresso = Color(0xFF2C1A0E); // text primary
-  static const warmUmber = Color(0xFF6B4C35); // text secondary
+  static const textPrimary   = Color(0xFF111111);
+  static const textSecondary = Color(0xFF555555);
 
-  static const oliveSage = Color(0xFF7A8C5E); // accent / success
-  static const clayRed = Color(0xFFB94040); // error / destructive
+  static const success = Color(0xFF2E7D32);
+  static const error   = Color(0xFFB00020);
 }
 
-/// Central warm/earthy light theme.
+/// Navy-and-white theme.
 final ThemeData appTheme = ThemeData(
   useMaterial3: true,
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
-    primary: AppColors.terracotta,
+    primary: AppColors.navy,
     onPrimary: Colors.white,
-    secondary: AppColors.oliveSage,
+    secondary: AppColors.navyLight,
     onSecondary: Colors.white,
-    error: AppColors.clayRed,
+    error: AppColors.error,
     onError: Colors.white,
-    surface: AppColors.surface1,
-    onSurface: AppColors.espresso,
-    surfaceVariant: AppColors.surface2,
-    onSurfaceVariant: AppColors.warmUmber,
-    outline: AppColors.surface3,
+    surface: Colors.white,
+    onSurface: AppColors.textPrimary,
+    surfaceVariant: AppColors.surface,
+    onSurfaceVariant: AppColors.textSecondary,
+    outline: AppColors.divider,
     shadow: Colors.black26,
-    inverseSurface: AppColors.espresso,
-    onInverseSurface: AppColors.surface1,
-    inversePrimary: AppColors.sandstone,
+    inverseSurface: AppColors.textPrimary,
+    onInverseSurface: Colors.white,
+    inversePrimary: AppColors.navyLight,
   ),
-  scaffoldBackgroundColor: AppColors.surface1,
-  cardColor: AppColors.surface2,
-  dialogBackgroundColor: AppColors.surface2,
-  dividerColor: AppColors.surface3,
+  scaffoldBackgroundColor: Colors.white,
+  cardColor: Colors.white,
+  dialogBackgroundColor: Colors.white,
+  dividerColor: AppColors.divider,
   textTheme: const TextTheme(
-    bodyMedium: TextStyle(color: AppColors.espresso),
-    bodyLarge: TextStyle(color: AppColors.espresso),
-    bodySmall: TextStyle(color: AppColors.warmUmber),
+    bodyMedium: TextStyle(color: AppColors.textPrimary),
+    bodyLarge: TextStyle(color: AppColors.textPrimary),
+    bodySmall: TextStyle(color: AppColors.textSecondary),
   ),
   appBarTheme: const AppBarTheme(
-    backgroundColor: AppColors.terracotta,
+    backgroundColor: AppColors.navy,
     foregroundColor: Colors.white,
     centerTitle: true,
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    backgroundColor: AppColors.terracotta,
+    backgroundColor: AppColors.navy,
     foregroundColor: Colors.white,
   ),
   chipTheme: ChipThemeData(
-    backgroundColor: AppColors.surface2,
-    selectedColor: AppColors.oliveSage,
-    disabledColor: AppColors.surface3,
-    labelStyle: const TextStyle(color: AppColors.warmUmber),
+    backgroundColor: AppColors.surface,
+    selectedColor: AppColors.navy,
+    disabledColor: AppColors.divider,
+    labelStyle: const TextStyle(color: AppColors.textSecondary),
     secondaryLabelStyle: const TextStyle(color: Colors.white),
     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),

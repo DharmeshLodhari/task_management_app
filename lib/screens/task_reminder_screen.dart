@@ -143,7 +143,6 @@ class _TaskReminderScreenState extends State<TaskReminderScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Record Task Reminder'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -183,16 +182,16 @@ class _TaskReminderScreenState extends State<TaskReminderScreen> {
                     shape: BoxShape.circle,
                     color: _isListening
                         ? Colors.red.withOpacity(0.12)
-                        : Colors.indigo.withOpacity(0.1),
+                        : const Color(0xFF000080).withOpacity(0.1),
                     border: Border.all(
-                      color: _isListening ? Colors.red : Colors.indigo,
+                      color: _isListening ? Colors.red : const Color(0xFF000080),
                       width: 2,
                     ),
                   ),
                   child: Icon(
                     _isListening ? Icons.mic : Icons.mic_none,
                     size: 54,
-                    color: _isListening ? Colors.red : Colors.indigo,
+                    color: _isListening ? Colors.red : const Color(0xFF000080),
                   ),
                 ),
               ),
@@ -285,7 +284,7 @@ class _TaskReminderScreenState extends State<TaskReminderScreen> {
                 icon: const Icon(Icons.alarm_add),
                 label: const Text('Set Reminder'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.indigo,
+                  backgroundColor: const Color(0xFF000080),
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   textStyle: const TextStyle(fontSize: 15),

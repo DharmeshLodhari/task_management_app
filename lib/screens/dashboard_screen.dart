@@ -238,7 +238,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             const SizedBox(height: 16),
             ListTile(
               leading: const CircleAvatar(
-                backgroundColor: Colors.teal,
+                backgroundColor: Color(0xFF000080),
                 child: Icon(Icons.alarm_add, color: Colors.white),
               ),
               title: const Text('Record Task Reminder'),
@@ -250,7 +250,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             ),
             ListTile(
               leading: const CircleAvatar(
-                backgroundColor: Colors.deepPurple,
+                backgroundColor: Color(0xFF000080),
                 child: Icon(Icons.edit_calendar, color: Colors.white),
               ),
               title: const Text('Manual Reminder'),
@@ -280,21 +280,14 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade50,
       appBar: AppBar(
         title: const Text('Voice Reminder'),
-        backgroundColor: Colors.blue,
       ),
-      body: Container(
-        color: Colors.blue.shade50,
-        child: _isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : _buildRemindersList(),
-      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : _buildRemindersList(),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddOptions,
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
         child: const Icon(Icons.add),
       ),
     );
@@ -337,7 +330,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                         ? Icons.stop_circle_outlined
                         : Icons.play_circle_outline,
                   ),
-                  color: isPlaying ? Colors.red : Colors.indigo,
+                  color: isPlaying ? Colors.red : const Color(0xFF000080),
                   iconSize: 36,
                   onPressed: () => _togglePlay(rec),
                 ),
@@ -376,10 +369,10 @@ class _DashboardScreenState extends State<DashboardScreen>
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             leading: CircleAvatar(
               backgroundColor:
-                  isPast ? Colors.grey.shade200 : Colors.teal.shade50,
+                  isPast ? Colors.grey.shade200 : const Color(0xFF000080).withOpacity(0.1),
               child: Icon(
                 isPast ? Icons.alarm_off : Icons.alarm,
-                color: isPast ? Colors.grey : Colors.teal,
+                color: isPast ? Colors.grey : const Color(0xFF000080),
               ),
             ),
             title: Text(
@@ -397,13 +390,13 @@ class _DashboardScreenState extends State<DashboardScreen>
                   children: [
                     Icon(Icons.schedule,
                         size: 13,
-                        color: isPast ? Colors.grey : Colors.teal),
+                        color: isPast ? Colors.grey : const Color(0xFF000080)),
                     const SizedBox(width: 4),
                     Text(
                       '${_formatTime(rem.reminderTime)} · ${_formatDate(rem.createdAt)}',
                       style: TextStyle(
                         fontSize: 12,
-                        color: isPast ? Colors.grey : Colors.teal,
+                        color: isPast ? Colors.grey : const Color(0xFF000080),
                       ),
                     ),
                   ],

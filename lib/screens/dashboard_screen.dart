@@ -479,7 +479,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                   crossAxisCount: crossAxisCount,
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
-                  childAspectRatio: 1.3,
+                  childAspectRatio: 0.9,
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
@@ -511,7 +511,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                         : const Color(0xFF000080),
                                   ),
                                 ),
-                                const SizedBox(height: 12),
+                                const Spacer(),
                                 IconButton(
                                   icon: const Icon(
                                     Icons.delete_outline,

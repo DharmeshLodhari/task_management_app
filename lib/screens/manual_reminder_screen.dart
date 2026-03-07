@@ -182,6 +182,20 @@ class _ManualReminderScreenState extends State<ManualReminderScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 24),
+
+            // Repeat rule (basic)
+            const Text(
+              'Repeat',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Currently this reminder does not repeat. (Recurring options will be added here.)',
+              style: TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+            const SizedBox(height: 24),
+
             const SizedBox(height: 36),
 
             // Save button

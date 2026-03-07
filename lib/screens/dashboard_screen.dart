@@ -490,6 +490,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
@@ -510,7 +511,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                         : const Color(0xFF000080),
                                   ),
                                 ),
-                                const Spacer(),
+                                const SizedBox(height: 12),
                                 IconButton(
                                   icon: const Icon(
                                     Icons.delete_outline,
@@ -536,7 +537,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                 color: isPast ? Colors.grey : null,
                               ),
                             ),
-                            const Spacer(),
+                            const SizedBox(height: 12),
                             Row(
                               children: [
                                 Icon(

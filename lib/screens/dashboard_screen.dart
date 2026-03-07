@@ -461,7 +461,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             ? 3
             : width >= 600
                 ? 2
-                : 2;
+                : 1;
 
         return CustomScrollView(
           slivers: [
@@ -479,7 +479,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                   crossAxisCount: crossAxisCount,
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
-                  childAspectRatio: 0.9,
+                  childAspectRatio: 0.7,
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {

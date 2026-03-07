@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/dashboard_screen.dart';
+import 'screens/splash_screen.dart';
 import 'services/alarm_scheduler_service.dart';
 import 'theme.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'Voice Reminder',
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      home: DashboardScreen(launchReminderId: launchReminderId),
+      home: const SplashScreen(),
     );
   }
 }
